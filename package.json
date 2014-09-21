@@ -1,0 +1,29 @@
+{
+  "name": "Onion",
+  "version": "0.0.1",
+  "description": "a todo list and time manager",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nxy105/Onion.git"
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "Onion"
+  ],
+  "author": "nienieservice@163.com",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/nxy105/Onion/issues"
+  },
+  "homepage": "https://github.com/nxy105/Onion",
+  "devDependencies": {
+    "grunt": "~0.4.5"
+  },
+  "dependencies": {
+    "express": "4.9.4",
+    "hbs": "2.7.0"
+  }
+}
