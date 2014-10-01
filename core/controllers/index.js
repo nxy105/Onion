@@ -1,6 +1,8 @@
 /**
  * Controller index.
  */
+var onion = require('../models/onion');
+
 var index = {};
 
 index.index = function(req, res) {
