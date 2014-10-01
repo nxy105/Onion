@@ -80,7 +80,7 @@ app.use(function(err, req, res, next){
     if (!module.parent) console.error(err.stack);
 
     // error page
-    res.status(500).render('5xx');
+    res.status(500).render('500');
 });
 
 // assume 404 since no middleware responded

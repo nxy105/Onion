@@ -3,12 +3,16 @@
  */
 var onion = require('../models/onion');
 
-var index = {};
+var controller = {};
 
-index.index = function(req, res) {
+controller.index = function(req, res) {
+
+    onion.createOnion({name: 'Joshua\'s onion'});
+
     res.render('index/index', {
-        title: 'Onion'
+        title: 'Onion',
+        message: 'Create Success'
     });
 };
 
-module.exports = index;
+module.exports = controller;
