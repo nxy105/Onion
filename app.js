@@ -77,7 +77,7 @@ app.use('/', router);
 
 app.use(function(err, req, res, next){
     // log it
-    if (!module.parent) console.error(err.stack);
+    console.error(err.stack);
 
     // error page
     res.status(500).render('500');

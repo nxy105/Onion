@@ -13,7 +13,7 @@ model.createOnion = function(data) {
     mongo.open(function(err, mongo) {
         var db = mongo.db('test');
         var collection = db.collection('example');
-        collection.insert(data);
+        collection.insert(data, function() {});
         mongo.close();
     });
 };

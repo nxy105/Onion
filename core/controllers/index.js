@@ -7,7 +7,7 @@ var controller = {};
 
 controller.index = function(req, res) {
 
-    onion.createOnion({name: 'Joshua\'s onion'});
+    // onion.createOnion({name: 'Joshua\'s onion'});
 
     res.render('index/index', {
         title: 'Onion',
