@@ -14,6 +14,11 @@
     <body>
         <div class="container">
             <div class="header">
+                <ul class="nav pull-right">
+                    <li>
+                        <a href="javascript:void(0);">用户</a>
+                    </li>
+                </ul>
                 <h3 class="text-muted"><strong>洋葱土豆</strong> <small>管理自己的时间</small></h3>
             </div>
             <div class="row">
@@ -22,34 +27,38 @@
                         <h4>今天</h4>
                         <div class="list-group">
                             <a href="javascript:void(0);" class="list-group-item">
-                                <h5 class="list-group-item-heading">今天完成的洋葱1</h5>
-                                <p class="list-group-item-text time">09:30 - 10:20</p>
+                                <p class="list-group-item-heading">今天完成的洋葱1</p>
+                                <p class="list-group-item-text date">09:30 - 10:20</p>
                             </a>
                             <a href="javascript:void(0);" class="list-group-item">
                                 <h5 class="list-group-item-heading">今天完成的洋葱2</h5>
-                                <p class="list-group-item-text time">09:30 - 10:20</p>
+                                <p class="list-group-item-text date">09:30 - 10:20</p>
                             </a>
                         </div>
                         <h4>昨天</h4>
                         <div class="list-group">
                             <a href="javascript:void(0);" class="list-group-item">
                                 <h5 class="list-group-item-heading">昨天完成的洋葱1</h5>
-                                <p class="list-group-item-text time">09:30 - 10:20</p>
+                                <p class="list-group-item-text date">09:30 - 10:20</p>
                             </a>
                         </div>
                         <h4>10月04日</h4>
                         <div class="list-group">
                             <a href="javascript:void(0);" class="list-group-item">
                                 <h5 class="list-group-item-heading">以前完成的洋葱1</h5>
-                                <p class="list-group-item-text time">09:30 - 10:20</p>
+                                <p class="list-group-item-text date">09:30 - 10:20</p>
                             </a>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h2>00:00</h2>
+                    <h2 class="text-center timer">
+                        <minute>00</minute>:<second>00</second>
+                    </h2>
                     <button type="button" class="btn btn-primary btn-lg btn-block">开始一个洋葱</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block disabled">开始一个洋葱</button>
                     <button type="button" class="btn btn-default btn-lg btn-block">完成这个洋葱</button>
+                    <button type="button" class="btn btn-default btn-lg btn-block disabled">完成这个洋葱</button>
                 </div>
                 <div class="col-md-4">
                     <div class="well">

@@ -1,8 +1,22 @@
+body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 .header {
     border-bottom: 1px solid #e5e5e5;
     margin-bottom: 30px;
 }
-.time {
+.header h3 {
+    padding-bottom: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+}
+.date {
     color: #999;
-    padding-right: .8em;
+    font-size: 90%;
+}
+.timer {
+    font-size: 500%;
+    height: 80px;
 }
