@@ -1,0 +1,20 @@
+{
+  "name": "Onion",
+  "version": "0.0.1",
+  "homepage": "https://github.com/nxy105/Onion",
+  "authors": [
+    "Joshua <joshua@huoban.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0"
+  }
+}
