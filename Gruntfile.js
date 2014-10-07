@@ -23,8 +23,22 @@ var configureGrunt = function(grunt) {
                     {expand: true, cwd: 'bower_components/angular-route/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'},
                     {expand: true, cwd: 'bower_components/angular-resource/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'}
                 ]
+            },
+            onion: {
+                files: [
+                    {expand: true, cwd: 'src/client/views/', src: '*.html', dest: 'public/javascripts/view/', filter: 'isFile'}
+                ]
             }
-        }
+        },
+        concat: {
+            options: {
+                separator: "\n\n"
+            },
+            dev: {
+                src: ['src/client/app.js', 'src/client/controllers/*.js', 'src/client/services/*.js'],
+                dest: 'public/javascripts/main/app.js'
+            }
+        },
     };
 
     grunt.initConfig(config);
@@ -32,8 +46,11 @@ var configureGrunt = function(grunt) {
     // load copy plugin
     grunt.loadNpmTasks('grunt-contrib-copy');
 
+    // load concat plugin
+    grunt.loadNpmTasks('grunt-contrib-concat');
+
     // regist dev task
-    grunt.registerTask('dev', ['copy']);
+    grunt.registerTask('dev', ['copy', 'concat']);
 };
 
 // Export the configuration
