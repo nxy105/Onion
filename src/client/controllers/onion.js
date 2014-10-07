@@ -1,4 +1,4 @@
-/* Controllers */
+/* App Controllers */
 
 var OnionControllers = angular.module('OnionControllers', []);
 
