@@ -8,6 +8,7 @@
     "url": "https://github.com/nxy105/Onion.git"
   },
   "scripts": {
+    "prestart": "grunt dev",
     "start": "supervisor ./bin/www"
   },
   "keywords": [

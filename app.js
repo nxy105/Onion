@@ -7,7 +7,7 @@ var logger = require('morgan');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 
-var router = require('./core/router');
+var router = require('./src/server/router');
 
 var app = module.exports = express();
 
@@ -18,7 +18,7 @@ var app = module.exports = express();
 app.set('view engine', 'jade');
 
 // set views for error and 404 pages
-app.set('views', __dirname + '/core/views');
+app.set('views', __dirname + '/src/server/views');
 
 // define a custom res.message() method
 // which stores messages in the session

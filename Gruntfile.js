@@ -7,14 +7,21 @@ var configureGrunt = function(grunt) {
         copy: {
             bootstrap: {
                 files: [
-                    {expand: true, cwd: 'bower_components/bootstrap/dist/js/', src: '*.js', dest: 'public/javascripts/', filter: 'isFile'},
+                    {expand: true, cwd: 'bower_components/bootstrap/dist/js/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'},
                     {expand: true, cwd: 'bower_components/bootstrap/dist/css/', src: '*.css', dest: 'public/stylesheets/', filter: 'isFile'},
                     {expand: true, cwd: 'bower_components/bootstrap/dist/fonts/', src: '*', dest: 'public/stylesheets/', filter: 'isFile'}
                 ]
             },
             jquery: {
                 files: [
-                    {expand: true, cwd: 'bower_components/jquery/dist/', src: '*.js', dest: 'public/javascripts/', filter: 'isFile'}
+                    {expand: true, cwd: 'bower_components/jquery/dist/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'}
+                ]
+            },
+            angular: {
+                files: [
+                    {expand: true, cwd: 'bower_components/angular/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'},
+                    {expand: true, cwd: 'bower_components/angular-route/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'},
+                    {expand: true, cwd: 'bower_components/angular-resource/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'}
                 ]
             }
         }
