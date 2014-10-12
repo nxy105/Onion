@@ -30,39 +30,60 @@
                     <div class="well">
                         <h4>今天</h4>
                         <div class="list-group">
-                            <a href="javascript:void(0);" class="list-group-item">
-                                <p class="list-group-item-heading">今天完成的洋葱1</p>
-                                <p class="list-group-item-text date">09:30 - 10:20</p>
-                            </a>
-                            <a href="javascript:void(0);" class="list-group-item">
+                            <div class="list-group-item">
+                                <h5 class="list-group-item-heading">今天完成的洋葱1</h5>
+                                <p class="list-group-item-text">
+                                    <span class="onion-date">09:30</span>
+                                     -
+                                    <span class="onion-date">10:20</span>
+                                </p>
+                            </div>
+                            <div class="list-group-item">
                                 <h5 class="list-group-item-heading">今天完成的洋葱2</h5>
-                                <p class="list-group-item-text date">09:30 - 10:20</p>
-                            </a>
+                                <p class="list-group-item-text">
+                                    <span class="onion-date">09:30</span>
+                                     -
+                                    <span class="onion-date">10:20</span>
+                                </p>
+                            </div>
                         </div>
                         <h4>昨天</h4>
                         <div class="list-group">
-                            <a href="javascript:void(0);" class="list-group-item">
+                            <div class="list-group-item">
                                 <h5 class="list-group-item-heading">昨天完成的洋葱1</h5>
-                                <p class="list-group-item-text date">09:30 - 10:20</p>
-                            </a>
+                                <p class="list-group-item-text">
+                                    <span class="onion-date">09:30</span>
+                                     -
+                                    <span class="onion-date">10:20</span>
+                                </p>
+                            </div>
                         </div>
                         <h4>10月04日</h4>
                         <div class="list-group">
-                            <a href="javascript:void(0);" class="list-group-item">
-                                <h5 class="list-group-item-heading">以前完成的洋葱1</h5>
-                                <p class="list-group-item-text date">09:30 - 10:20</p>
-                            </a>
+                            <div class="list-group-item">
+                                <h5 class="list-group-item-heading">10月04日完成的洋葱1</h5>
+                                <p class="list-group-item-text">
+                                    <span class="onion-date">09:30</span>
+                                     -
+                                    <span class="onion-date">10:20</span>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <h2 class="text-center timer">
+                    <h2 class="text-center onion-timer">
                         <minute>00</minute>:<second>00</second>
                     </h2>
-                    <button type="button" class="btn btn-primary btn-lg btn-block">开始一个洋葱</button>
-                    <button type="button" class="btn btn-primary btn-lg btn-block disabled">开始一个洋葱</button>
-                    <button type="button" class="btn btn-default btn-lg btn-block">完成这个洋葱</button>
-                    <button type="button" class="btn btn-default btn-lg btn-block disabled">完成这个洋葱</button>
+                    <div class="onion-area-btns">
+                        <button type="button" class="btn btn-primary btn-lg btn-block">开始一个洋葱</button>
+                        <button type="button" class="btn btn-default btn-lg btn-block">完成这个洋葱</button>
+                        <button type="button" class="btn onion-btn-pause btn-lg btn-block">中断这个洋葱</button>
+                    </div>
+                    <div class="onion-callout onion-callout-tips">
+                        <h4>小贴士</h4>
+                        <span>请先选择需要执行的任务, 请先选择需要执行的任务, 请先选择需要执行的任务</span>
+                    </div>
                 </div>
                 <div class="col-md-4">
                     <div class="well">
@@ -74,9 +95,13 @@
                         </div>
                         <div class="list-group">
                             <a href="javascript:void(0);" class="list-group-item active">
-                            设置的土豆1
+                                设置的土豆1
+                                <span class="glyphicon glyphicon-minus pull-right"></span>
                             </a>
-                            <a href="javascript:void(0);" class="list-group-item">设置的土豆2</a>
+                            <a href="javascript:void(0);" class="list-group-item">
+                                设置的土豆2
+                                <span class="glyphicon glyphicon-minus pull-right"></span>
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ var configureGrunt = function(grunt) {
                 files: [
                     {expand: true, cwd: 'bower_components/bootstrap/dist/js/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'},
                     {expand: true, cwd: 'bower_components/bootstrap/dist/css/', src: '*.css', dest: 'public/stylesheets/', filter: 'isFile'},
-                    {expand: true, cwd: 'bower_components/bootstrap/dist/fonts/', src: '*', dest: 'public/stylesheets/', filter: 'isFile'}
+                    {expand: true, cwd: 'bower_components/bootstrap/dist/fonts/', src: '*', dest: 'public/fonts/', filter: 'isFile'}
                 ]
             },
             jquery: {

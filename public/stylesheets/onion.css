@@ -12,11 +12,29 @@ body {
     margin-bottom: 0;
     line-height: 40px;
 }
-.date {
+.onion-date {
     color: #999;
     font-size: 90%;
 }
-.timer {
+.onion-timer {
     font-size: 500%;
     height: 80px;
+}
+.onion-btn-pause {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+.onion-area-btns {
+    margin-bottom: 20px;
+}
+.onion-callout {
+    padding: 10px 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.onion-callout-tips {
+    border-left-color: #5bc0de;
 }
