@@ -2,8 +2,8 @@
  * Model onion.
  */
 
-var mongo = require('../mongo'),
-    format = require('util').format;
+var mongo = require('../mongo')
+  , format = require('util').format;
 
 var model = {};
 

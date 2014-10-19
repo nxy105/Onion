@@ -1,18 +1,17 @@
 /**
  * Controller index.
  */
-var onion = require('../models/onion');
+var onion = require('../models/onion')
+  , controller = {};
 
-var controller = {};
-
+/**
+ * index action
+ */
 controller.index = function(req, res) {
 
-    // onion.createOnion({name: 'Joshua\'s onion'});
+    var userId = req.session.userId;
 
-    res.render('index/index', {
-        title: 'Onion',
-        message: 'Create Success'
-    });
+    res.render('index/index', {stream : JSON.stringify({ userId: userId })});
 };
 
 module.exports = controller;

@@ -39,6 +39,12 @@ var configureGrunt = function(grunt) {
                 dest: 'public/javascripts/main/app.js'
             }
         },
+        watch: {
+            scripts: {
+                files: ['src/client/**/*'],
+                tasks: ['copy:onion', 'concat:dev']
+            },
+        },
     };
 
     grunt.initConfig(config);
@@ -49,8 +55,14 @@ var configureGrunt = function(grunt) {
     // load concat plugin
     grunt.loadNpmTasks('grunt-contrib-concat');
 
+    // watch concat plugin
+    grunt.loadNpmTasks('grunt-contrib-watch');
+
     // regist dev task
     grunt.registerTask('dev', ['copy', 'concat']);
+
+    // regist dev-watch task
+    grunt.registerTask('dev-watch', ['watch']);
 };
 
 // Export the configuration
