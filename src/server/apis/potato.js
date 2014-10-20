@@ -5,17 +5,25 @@ var onion = require('../models/onion')
   , api = {};
 
 /**
- * get action
+ * list action
  */
-api.get = function(req, res, error) {
+api.list = function(req, res) {
 
-    throw error(501, 'error example');
+    return {success: true};
 };
 
 /**
  * create action
  */
-api.create = function(req, res) {
+api.create = function(req, res, error, promise) {
+
+    var title = req.param('title');
+
+    if (!title) {
+        throw error(501, 'error example');
+    }
+
+    return {success: true};
 };
 
 /**
@@ -25,11 +33,11 @@ api.update = function(req, res) {
 };
 
 /**
- * list action
+ * get action
  */
-api.list = function(req, res) {
+api.remove = function(req, res, error) {
 
-    return {success: true};
+    throw error(501, 'error example');
 };
 
 module.exports = api;

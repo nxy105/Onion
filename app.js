@@ -35,7 +35,7 @@ if (!module.parent) {
 app.use(express.static(__dirname + '/public'));
 
 // parse request bodies (req.body)
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 // load session
 app.use(require('./src/server/session'));
