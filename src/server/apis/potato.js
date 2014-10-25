@@ -2,6 +2,7 @@
  * Controller potato.
  */
 var onion = require('../models/onion')
+  , potato = require('../models/potato')
   , api = {};
 
 /**
@@ -20,10 +21,10 @@ api.create = function(req, res, error, promise) {
     var title = req.param('title');
 
     if (!title) {
-        throw error(501, 'error example');
+        return when.reject(error(501, 'error example'));
     }
 
-    return {success: true};
+    return onion.create({ title: title });
 };
 
 /**

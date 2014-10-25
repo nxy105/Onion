@@ -2,20 +2,29 @@
  * Model onion.
  */
 
-var mongo = require('../mongo')
+var db = require('../db')
   , format = require('util').format;
 
-var model = {};
+var onionModel = {
 
-// create a new onion
-model.createOnion = function(data) {
-    // open a db connection
-    mongo.open(function(err, mongo) {
-        var db = mongo.db('test');
-        var collection = db.collection('example');
-        collection.insert(data, function() {});
-        mongo.close();
-    });
+    create: function(data) {
+        return db.insert('onion', data);
+    },
+
+    update: function(onion, data) {
+        return db.update('onion', onion._id, data);
+    },
+
+    get: function(onionId) {
+        return db.findOne('onion', { 'onionId': onionId });
+    },
+
+    
 };
 
-module.exports = model;
+// create a new onion
+onionModel.create = function(data) {
+    return db.insert('onion', data);
+};
+
+module.exports = onionModel;
