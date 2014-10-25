@@ -1,12 +1,9 @@
 /**
  * DB
  */
-var MongoClient = require('mongodb').MongoClient,
-    Server = require('mongodb').Server,
-    when = require('when');
+var MongoClient = require('mongodb').MongoClient
+  , when = require('when');
 
-// connect to Mongo server
-// var mongo = new MongoClient(new Server('localhost', 27017));
 var dsn = 'mongodb://localhost:27017/test';
 var db = {
 
@@ -18,7 +15,7 @@ var db = {
      */
     getNextSequence: function(db, collection) {
         return when.promise(function(resolve, reject) {
-            db.collection('counters').findAndModify({ '_id': collection}
+            db.collection('counters').findAndModify({ '_id': collection }
                 , []
                 , { '$inc': { 'seq': 1 } }
                 , { 'new': true }
@@ -26,25 +23,20 @@ var db = {
             );
 
             function onResponse(err, result) {
-                console.log(result.seq);
                 resolve({ 'db': db, 'seq': result.seq });
             }
         });
     },
 
     /**
-     * connect
+     * connect to MongoDB server
      *
      * @return promise
      */
     connect: function() {
         return when.promise(function(resolve, reject) {
             MongoClient.connect(dsn, function(err, db) {
-                if (err) {
-                    reject(err);
-                }
-
-                resolve(db);
+                return err ? reject(err) : resolve(db);
             });
         });
     },
@@ -53,10 +45,11 @@ var db = {
      * insert
      *
      * @param  string collection collection name
+     * @param  string pk         primary key field name
      * @param  object data       data will be inserted
      * @return pormise
      */
-    insert: function(collection, data) {
+    insert: function(collection, pk, data) {
         var _this = this;
         return this.connect().then(function(db) {
             // get next seq id
@@ -66,13 +59,10 @@ var db = {
               , seq = result.seq;
 
             return when.promise(function(resolve, reject) {
-                data._id = seq;
+                // set unique id into pk field
+                data[pk] = seq;
                 db.collection(collection).insert(data, function(err, result) {
-                    if (err) {
-                        reject(err);
-                    }
-
-                    resolve(result[0]);
+                    return err ? reject(err) : resolve(result[0]);
                 });
             });
         });
@@ -89,13 +79,13 @@ var db = {
     update: function(collection, query, data) {
         return this.connect().then(function(db) {
             return when.promise(function(resolve, reject) {
-                db.collection(collection).update(query, { '$set': data }, function(err, result) {
-                    if (err) {
-                        reject(err);
-                    }
+                db.collection(collection).update(query
+                    , { '$set': data }
+                    , onResponse);
 
-                    resolve(result[0]);
-                });
+                function onResponse(err, result) {
+                    return err ? reject(err) : resolve(result[0]);
+                }
             });
         });
     },
@@ -110,13 +100,11 @@ var db = {
     remove: function(collection, query) {
         return this.connect().then(function(db) {
             return when.promise(function(resolve, reject) {
-                db.collection(collection).remove(query, function(err, result) {
-                    if (err) {
-                        reject(err);
-                    }
+                db.collection(collection).remove(query, onResponse);
 
-                    resolve(result[0]);
-                });
+                function onResponse(err, result) {
+                    return err ? reject(err) : resolve(result[0]);
+                }
             });
         });
     },
@@ -132,13 +120,14 @@ var db = {
     find: function(collection, query, fields) {
         return this.connect().then(function(db) {
             return when.promise(function(resolve, reject) {
-                db.collection(collection).find(query, fields ? fields : {}, function(err, result) {
-                    if (err) {
-                        reject(err);
-                    }
+                db.collection(collection).find(query
+                    , fields ? fields : {}
+                    , onResponse
+                );
 
-                    resolve(result);
-                });
+                function onResponse(err, result) {
+                    return err ? reject(err) : resolve(result);
+                }
             });
         });
     },
@@ -154,13 +143,14 @@ var db = {
     findOne: function(collection, query, fields) {
         return this.connect().then(function(db) {
             return when.promise(function(resolve, reject) {
-                db.collection(collection).findOne(query, fields ? fields : {}, function(err, result) {
-                    if (err) {
-                        reject(err);
-                    }
+                db.collection(collection).findOne(query
+                    , fields ? fields : {}
+                    , onResponse
+                );
 
-                    resolve(result);
-                });
+                function onResponse(err, result) {
+                    return err ? reject(err) : resolve(result);
+                }
             });
         });
     }

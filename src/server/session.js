@@ -33,7 +33,7 @@ module.exports = function(req, res, next) {
         if (req.path == '/') {
             next();
         } else {
-            res.type('application/json').json({code: 100, msg: 'Not login yet'});
+            res.type('application/json').json({ 'code': 100, 'msg': 'Not login yet' });
         }
     } else {
         next();
