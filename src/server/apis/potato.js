@@ -1,7 +1,8 @@
 /**
  * Controller potato.
  */
-var potatoModel = require('../models/potato');
+var moment = require('moment')
+  , potatoModel = require('../models/potato');
 
 var potatoApi = {
 
@@ -39,7 +40,7 @@ var potatoApi = {
         return potatoModel.create({
             'title': title,
             'createdById': createdById,
-            'createdOn': createdOn,
+            'createdOn': moment().format('YYYY-MM-DD HH:mm:ss'),
             'status': potatoModel.STATUS.NORMAL
         });
     },
@@ -53,7 +54,25 @@ var potatoApi = {
      * @return promise
      */
     update: function(req, res, error) {
+        var potatoId, title, createdById, createdOn;
 
+        potatoId = parseInt(req.param('potatoId'));
+        title = req.param('title');
+        status = req.param('status');
+
+        if (!potatoId) {
+            return when.reject(error(10002, 'Update a potato require a potato id'));
+        }
+
+        return potatoModel.get(potatoId).then(function(potato) {
+            // when get a potato to do this
+            var updatingData = { 'title': title, 'status': status };
+
+            // update potato and return a promise object
+            return potatoModel.update(potatoId, updatingData);
+        }).then(function() {
+            return potatoModel.get(potatoId);
+        });
     },
 
     /**

@@ -61,8 +61,8 @@ var db = {
             return when.promise(function(resolve, reject) {
                 // set unique id into pk field
                 data[pk] = seq;
-                db.collection(collection).insert(data, function(err, result) {
-                    return err ? reject(err) : resolve(result[0]);
+                db.collection(collection).insert(data, function(err, records) {
+                    return err ? reject(err) : resolve(records[0]);
                 });
             });
         });
@@ -83,8 +83,8 @@ var db = {
                     , { '$set': data }
                     , onResponse);
 
-                function onResponse(err, result) {
-                    return err ? reject(err) : resolve(result[0]);
+                function onResponse(err, updatedCount) {
+                    return err ? reject(err) : resolve(updatedCount);
                 }
             });
         });

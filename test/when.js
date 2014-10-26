@@ -33,13 +33,6 @@ describe('When Test', function() {
                 });
 
                 return promise;
-                
-                // return when.resolve('result2');
-
-                // setTimeout(function() {
-                //     console.log('resolve promise2');
-                //     when.resolve('result2');
-                // }, 500);
             });
 
             var promise3 = promise2.then(function(result) {
@@ -56,6 +49,29 @@ describe('When Test', function() {
                 });
 
                 return promise;
+            });
+        });
+
+        it('Promise multi', function(done) {
+
+            when.promise(function(resolve, reject) {
+                console.log('start promise1');
+
+                setTimeout(function() {
+                    console.log('resolve promise1');
+                    resolve('result1');
+                }, 500);
+            }).then(function(result) {
+
+                return when.promise(function(resolve, reject) {
+
+                    setTimeout(function() {
+                        console.log('resolve promise2');
+                        resolve('result2');
+                    }, 500);
+                });
+            }).then(function(result) {
+                console.log(result);
             });
         });
     });
