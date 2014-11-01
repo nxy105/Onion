@@ -27,6 +27,23 @@ describe('API Test', function() {
                 data.should.have.property('status', 'normal');
 
                 potatoId = data.potatoId;
+                // console.log('potato id is ' + potatoId);
+                return done();
+            }
+        });
+
+        // test potato create
+        it('potato.createWithInvalidTitle', function(done) {
+            agent
+                .post(domain + '/potato')
+                .send({ 'title': '' })
+                .end(onResponse);
+
+            function onResponse(err, res) {
+                var data = JSON.parse(res.text);
+
+                data.code.should.eql(10001);
+
                 return done();
             }
         });
@@ -44,6 +61,52 @@ describe('API Test', function() {
                 data.should.have.property('title', 'My first potato which be updated');
                 data.should.have.property('createdById', 1);
                 data.should.have.property('status', 'complete');
+
+                return done();
+            }
+        });
+
+        // test potato remove
+        it('potato.remove', function(done) {
+            agent
+                .del(domain + '/potato/' + potatoId)
+                .end(onResponse);
+
+            function onResponse(err, res) {
+                var data = JSON.parse(res.text).data;
+
+                data.should.eql('ok');
+
+                return done();
+            }
+        });
+
+        // test potato preList
+        it('potato.preList', function(done) {
+            agent
+                .post(domain + '/potato')
+                .send({ 'title': 'My first potato 2' })
+                .end(onResponse);
+
+            function onResponse(err, res) {
+                return done();
+            }
+        });
+
+        // test potato list
+        it('potato.list', function(done) {
+            agent
+                .get(domain + '/potato/')
+                .end(onResponse);
+
+            function onResponse(err, res) {
+                var data = JSON.parse(res.text).data;
+
+                data.should.be.type('object');
+                data.length.should.greaterThan(1);
+                data[0].should.have.property('title', 'My first potato 2');
+                data[0].should.have.property('createdById', 1);
+                data[0].should.have.property('status', 'normal');
 
                 return done();
             }

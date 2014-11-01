@@ -115,15 +115,16 @@ var db = {
      * @param  string collection collection name
      * @param  object query      query object
      * @param  object fields     fields will return
+     * @param  object options    options
      * @return pormise
      */
-    find: function(collection, query, fields) {
+    find: function(collection, query, fields, options) {
         return this.connect().then(function(db) {
             return when.promise(function(resolve, reject) {
                 db.collection(collection).find(query
                     , fields ? fields : {}
-                    , onResponse
-                );
+                    , options
+                ).toArray(onResponse);
 
                 function onResponse(err, result) {
                     return err ? reject(err) : resolve(result);
