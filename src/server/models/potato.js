@@ -2,8 +2,7 @@
  * Model onion.
  */
 
-var db = require('../db')
-  , format = require('util').format;
+var db = require('../db');
 
 var potatoModel = {
 
@@ -44,9 +43,9 @@ var potatoModel = {
     },
 
     /**
-     * create
+     * list normal potato.
      *
-     * @param  object data  potato data
+     * @param  integer createdById  create by user id
      * @return promise
      */
     listForNormal: function(createdById) {

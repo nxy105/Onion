@@ -2,17 +2,39 @@
  * Model onion.
  */
 
-var db = require('../db')
-  , format = require('util').format;
+var db = require('../db');
 
 var onionModel = {
 
+    /**
+     * create a onion.
+     *
+     * @param  object data  onion data
+     * @return promise
+     */
     create: function(data) {
-        return db.insert('onion', data);
+        return db.insert('onions', 'onionId', data);
     },
 
-    list: function(onionId) {
-        return db.findOne('onion', { 'onionId': onionId });
+    /**
+     * list normal onion.
+     *
+     * @param  integer createdById  create by user id
+     * @return promise
+     */
+    list: function(createdById) {
+        var options, conditions;
+
+        conditions = {
+            'createdById': createdById,
+        };
+
+        options = {
+            'limit': 20,
+            'sort': [['completedOn', 'desc'], ['onionId', 'desc']]
+        };
+
+        return db.find('onions', conditions, {}, options);
     }
 };
 

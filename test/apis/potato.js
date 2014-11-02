@@ -103,7 +103,7 @@ describe('API Test', function() {
                 var data = JSON.parse(res.text).data;
 
                 data.should.be.type('object');
-                data.length.should.greaterThan(1);
+                data.length.should.greaterThan(0);
                 data[0].should.have.property('title', 'My first potato 2');
                 data[0].should.have.property('createdById', 1);
                 data[0].should.have.property('status', 'normal');

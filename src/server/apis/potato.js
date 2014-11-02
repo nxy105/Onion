@@ -30,19 +30,15 @@ var potatoApi = {
      * @return promise
      */
     create: function(req, res, error) {
-        var title, createdById, createdOn;
+        var title = validator.toString(req.param('title'));
 
-        title = validator.toString(req.param('title'));
         if (!checkTitle(title)) {
             return error(10001, 'Potato title must be required and length must less then 100');
         }
 
-        createdById = req.session.userId;
-        createdOn = new Date();
-
         return potatoModel.create({
             'title': title,
-            'createdById': createdById,
+            'createdById': req.session.userId,
             'createdOn': moment().format('YYYY-MM-DD HH:mm:ss'),
             'status': potatoModel.STATUS.NORMAL
         });
@@ -83,7 +79,10 @@ var potatoApi = {
             }
 
             // when get a potato to do this
-            updatingData = { 'title': title, 'status': status };
+            updatingData = {
+                'title': title,
+                'status': status
+            };
 
             // update potato and return a promise object
             return potatoModel.update(potatoId, updatingData);
@@ -98,10 +97,10 @@ var potatoApi = {
      * @param  object   req      req object
      * @param  object   res      res object
      * @param  function error    error function which create error object
-     * @param  function success  success function
+     * @param  function next     next function
      * @return promise
      */
-    remove: function(req, res, error, success) {
+    remove: function(req, res, error, next) {
         var potatoId;
 
         potatoId = validator.toInt(req.param('potatoId'));
@@ -114,13 +113,13 @@ var potatoApi = {
             // do not allowed the other person to operate potato
             createdById = req.session.userId;
             if (potato.createdById !== createdById) {
-                return error(10007, 'You are not this potato\'s created person');
+                return error(10006, 'You are not this potato\'s created person');
             }
 
             // remove potato
             return potatoModel.remove(potatoId);
         }).then(function() {
-            return success('ok');
+            return next('ok');
         });
     },
 };
