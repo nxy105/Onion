@@ -43,7 +43,7 @@ var potatoModel = {
     },
 
     /**
-     * list normal potato.
+     * list normal potatos
      *
      * @param  integer createdById  create by user id
      * @return promise
@@ -62,6 +62,22 @@ var potatoModel = {
         };
 
         return db.find('potatos', conditions, {}, options);
+    },
+
+    /**
+     * list potatos by potato id
+     *
+     * @param  array  potatoIds  potato id
+     * @return promise
+     */
+    listByPotatoIds: function(potatoIds) {
+        var conditions = {
+            'potatoId': {
+                '$in': potatoIds
+            }
+        };
+
+        return db.find('potatos', conditions);
     },
 
     /**

@@ -4,7 +4,8 @@
 var moment = require('moment')
   , onionModel = require('../models/onion')
   , potatoModel = require('../models/potato')
-  , validator = require('../../../lib/validator');
+  , validator = require('../../../lib/validator')
+  , util = require('../../../lib/util');
 
 var onionApi = {
 
@@ -14,12 +15,22 @@ var onionApi = {
      * @param  object   req    req object
      * @param  object   res    res object
      * @param  function error  error function which create error object
+     * @param  function next   next function
      * @return promise
      */
-    list: function(req, res, error) {
-        var createdById = req.session.userId;
+    list: function(req, res, error, next) {
+        var createdById, potatoIds;
 
-        return onionModel.list(createdById);
+        createdById = req.session.userId;
+
+        return onionModel.list(createdById).then(function(onions) {
+            potatoIds = util.getCol(onions, 'potatoId');
+            // get all potato
+            return potatoModel.listByPotatoIds(potatoIds).then(function(potatos) {
+                // assemble onion with potato
+                return next(assembleOnions(onions, potatos));
+            });
+        });
     },
 
     /**
@@ -68,6 +79,25 @@ var onionApi = {
  */
 function checkCreatedOn(createdOn, completedOn) {
     return validator.isRequired(createdOn) && validator.isDate(createdOn) && validator.isBefore(createdOn, completedOn);
+}
+
+/**
+ * assemble onions
+ *
+ * @param  array   onions  onions
+ * @param  array   potatos potatos
+ * @return array
+ */
+function assembleOnions(onions, potatos) {
+    for (var i = 0; i < onions.length; i ++) {
+        for (var j = 0; j < potatos.length; j ++) {
+            if (potatos[j].potatoId === onions[i].potatoId) {
+                onions[i].potato = potatos[j];
+            }
+        }
+    }
+
+    return onions;
 }
 
 module.exports = onionApi;

@@ -26,7 +26,7 @@ router.delete('/potato/:potatoId', api.exec(potato.remove));
 router.get('/onion/', api.exec(onion.list));
 router.post('/onion', api.exec(onion.create));
 
-router.post('/login', api.exec(user.login));
-router.post('/logout', api.exec(user.logout));
+router.post('/user/login', api.exec(user.login));
+router.post('/user/logout', api.exec(user.logout));
 
 module.exports = router;

@@ -92,6 +92,9 @@ describe('API Test', function() {
                 data[0].should.have.property('createdOn', '2014-11-02 11:00:00');
                 data[0].should.have.property('potatoId', potatoId);
                 data[0].should.have.property('completedOn');
+                data[0].should.have.property('potato');
+                data[0].potato.should.have.property('potatoId', potatoId);
+                data[0].potato.should.have.property('title', 'Test onion create');
 
                 return done();
             }

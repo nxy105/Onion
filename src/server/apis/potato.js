@@ -101,9 +101,7 @@ var potatoApi = {
      * @return promise
      */
     remove: function(req, res, error, next) {
-        var potatoId;
-
-        potatoId = validator.toInt(req.param('potatoId'));
+        var potatoId = validator.toInt(req.param('potatoId'));
 
         if (potatoId === 0) {
             return error(10005, 'Remove a potato require a valid potato id');
@@ -116,7 +114,6 @@ var potatoApi = {
                 return error(10006, 'You are not this potato\'s created person');
             }
 
-            // remove potato
             return potatoModel.remove(potatoId);
         }).then(function() {
             return next('ok');

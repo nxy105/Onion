@@ -30,7 +30,7 @@ var userApi = {
             // set user login
             req.session.userId = user.userId;
 
-            return next(user.userId);
+            return next(user);
         });
     },
 
