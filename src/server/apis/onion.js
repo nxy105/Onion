@@ -35,7 +35,7 @@ var onionApi = {
         var createdById, createdOn, completedOn, potatoId;
 
         potatoId = validator.toInt(req.param('potatoId'));
-        createdOn = moment(req.param('createdOn')).format('YYYY-MM-DD HH:mm:ss');
+        createdOn = validator.toString(req.param('createdOn'));
         completedOn = moment().format('YYYY-MM-DD HH:mm:ss');
 
         if (potatoId === 0) {
@@ -52,7 +52,7 @@ var onionApi = {
             return onionModel.create({
                 'potatoId': potatoId,
                 'createdById': req.session.userId,
-                'createdOn': createdOn,
+                'createdOn': moment(createdOn).format('YYYY-MM-DD HH:mm:ss'),
                 'completedOn': completedOn,
             });
         });
