@@ -46,6 +46,22 @@ describe('API Test', function() {
             }
         });
 
+        // test user login
+        it('user.loginWithIncorrectPassword', function(done) {
+            agent
+                .post(domain + '/user/login')
+                .send({ 'username': 'joshua', 'password': '1234qaz' })
+                .end(onResponse);
+
+            function onResponse(err, res) {
+                var data = JSON.parse(res.text);
+
+                data.code.should.eql(30002);
+
+                return done();
+            }
+        });
+
         // test user logout
         it('user.logout', function(done) {
             agent

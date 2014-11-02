@@ -72,6 +72,11 @@ var potatoApi = {
         }
 
         return potatoModel.get(potatoId).then(function(potato) {
+            // can not find the potato
+            if (!potato) {
+                return error(10007, 'potato not found');
+            }
+
             // do not allowed the other person to operate potato
             createdById = req.session.userId;
             if (potato.createdById !== createdById) {
@@ -108,6 +113,11 @@ var potatoApi = {
         }
 
         return potatoModel.get(potatoId).then(function(potato) {
+            // can not find the potato
+            if (!potato) {
+                return error(10007, 'potato not found');
+            }
+
             // do not allowed the other person to operate potato
             createdById = req.session.userId;
             if (potato.createdById !== createdById) {

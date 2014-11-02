@@ -27,7 +27,12 @@ var userApi = {
         }
 
         return userModel.getByUsernameAndPassword(username, password).then(function(user) {
-            // set user login
+            // can not find the user
+            if (!user) {
+                return error(30002, 'username or password is invalid');
+            }
+
+            // set session
             req.session.userId = user.userId;
 
             return next(user);

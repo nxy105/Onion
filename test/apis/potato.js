@@ -111,5 +111,17 @@ describe('API Test', function() {
                 return done();
             }
         });
+
+        // test potato update
+        it('potato.updateNotExistPotato', function(done) {
+            agent
+                .put(domain + '/potato/99999999999999')
+                .send({ 'title': 'My first potato which be updated', 'status': 'complete'})
+                .end(onResponse);
+
+            function onResponse(err, res) {
+                return done();
+            }
+        });
     });
 });
