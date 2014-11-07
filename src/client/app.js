@@ -5,7 +5,8 @@
 var onionApp = angular.module('onionApp', [
     'ngRoute',
 
-    'OnionControllers'
+    'OnionControllers',
+    'PotatoServices'
 ]);
 
 // set router
