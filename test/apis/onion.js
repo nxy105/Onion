@@ -30,13 +30,13 @@ describe('API Test', function() {
         it('onion.create', function(done) {
             agent
                 .post(domain + '/onion')
-                .send({ 'createdOn': '2014-11-02 11:00:00', 'potatoId': potatoId })
+                .send({ 'createdOn': '2014-11-09 11:23:00', 'potatoId': potatoId })
                 .end(onResponse);
 
             function onResponse(err, res) {
                 var data = JSON.parse(res.text).data;
 
-                data.should.have.property('createdOn', '2014-11-02 11:00:00');
+                data.should.have.property('createdOn', '2014-11-09 11:23:00');
                 data.should.have.property('potatoId', potatoId);
                 data.should.have.property('completedOn');
 
@@ -65,7 +65,7 @@ describe('API Test', function() {
         it('onion.createWithLaterCreatedOn', function(done) {
             agent
                 .post(domain + '/onion')
-                .send({ 'createdOn': '2050-11-02 11:00:00', 'potatoId': potatoId })
+                .send({ 'createdOn': '2050-11-09 11:23:00', 'potatoId': potatoId })
                 .end(onResponse);
 
             function onResponse(err, res) {
@@ -89,7 +89,7 @@ describe('API Test', function() {
                 data.should.be.type('object');
                 data.length.should.greaterThan(0);
 
-                data[0].should.have.property('createdOn', '2014-11-02 11:00:00');
+                data[0].should.have.property('createdOn', '2014-11-09 11:23:00');
                 data[0].should.have.property('potatoId', potatoId);
                 data[0].should.have.property('completedOn');
                 data[0].should.have.property('potato');

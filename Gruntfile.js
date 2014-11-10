@@ -24,6 +24,11 @@ var configureGrunt = function(grunt) {
                     {expand: true, cwd: 'bower_components/angular-resource/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'}
                 ]
             },
+            moment: {
+                files: [
+                    {expand: true, flatten: true, src: 'bower_components/moment/moment.js', dest: 'public/javascripts/lib/', filter: 'isFile'}
+                ]
+            },
             onion: {
                 files: [
                     {expand: true, cwd: 'src/client/views/', src: '*.html', dest: 'public/javascripts/view/', filter: 'isFile'}

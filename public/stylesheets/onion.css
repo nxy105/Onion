@@ -38,3 +38,7 @@ body {
 .onion-callout-tips {
     border-left-color: #5bc0de;
 }
+.ng-hide {
+    /* this is just another form of hiding an element */
+    display: none;!important;
+}
