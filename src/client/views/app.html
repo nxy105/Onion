@@ -10,9 +10,9 @@
     <div class="row" ng-init="selectedPotatoId = 0">
         <div class="col-md-4">
             <div class="well">
-                <h4 ng-repeat-start="(date, onions) in formattedOnions">{{date}}</h4>
+                <h4 ng-repeat-start="group in onionGroups">{{group.date}}</h4>
                 <div class="list-group" ng-repeat-end>
-                    <div class="list-group-item" ng-repeat="onion in onions">
+                    <div class="list-group-item" ng-repeat="onion in group.onions">
                         <h5 class="list-group-item-heading">{{onion.potato.title}}</h5>
                         <p class="list-group-item-text">
                             <span class="onion-date">{{onion.createdOnTime}}</span> - <span class="onion-date">{{onion.completedOnTime}}</span>
@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-4">
             <h2 class="text-center onion-timer">
-                <minute>00</minute>:<second>00</second>
+                <hour>00</hour>:<minute>00</minute>:<second>00</second>
             </h2>
             <div class="onion-area-btns">
                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-disabled="!selectedPotatoId" ng-hide="started" ng-click="startOnion()">开始一个洋葱</button>

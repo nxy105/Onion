@@ -12,14 +12,16 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
 
     // list onions
     Onion.listAll(function(onions) {
-        var formattedOnions = {};
-        for (var i = 0; i < onions.length; i ++) {
-            var onion = onions[i]
-              , today = moment()
-              , yesterday = moment().subtract(1, 'days')
-              , createdOn, formattedDate;
+        var onionGroups = []
+          , today = moment()
+          , yesterday = moment().subtract(1, 'days')
+          , createdOn, formattedDate, onion
+          , currentGroupNum = -1;
 
+        for (var i = 0; i < onions.length; i ++) {
+            onion = onions[i];
             createdOn = moment(onion.createdOn);
+
             if (createdOn.isSame(today, 'day')) {
                 formattedDate = '今天';
             } else if (createdOn.isSame(yesterday, 'day')) {
@@ -28,17 +30,21 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
                 formattedDate = createdOn.format('MM月DD日');
             }
 
-            if (formattedOnions[formattedDate] === undefined) {
-                formattedOnions[formattedDate] = [];
-            }
-
             onion.createdOnTime = moment(onion.createdOn).format('HH:mm');
             onion.completedOnTime = moment(onion.completedOn).format('HH:mm');
-            formattedOnions[formattedDate].push(onion);
+
+            if (onionGroups[currentGroupNum] && onionGroups[currentGroupNum].date === formattedDate) {
+                onionGroups[currentGroupNum].onions.push(onion);
+            } else {
+                currentGroupNum ++;
+                onionGroups[currentGroupNum] = {
+                    date: formattedDate,
+                    onions: [onion]
+                };
+            }
         }
 
-        $scope.formattedOnions = formattedOnions;
-        console.log(formattedOnions);
+        $scope.onionGroups = onionGroups;
     });
 
     /**
