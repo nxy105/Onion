@@ -54,6 +54,10 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
      */
     $scope.initOnion = function() {
         $scope.started = false;
+
+        // show count clock
+        $scope.showCountClock = true;
+        $scope.showCountdownClock = false;
     };
 
     /**
@@ -63,6 +67,8 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
      */
     $scope.startOnion = function() {
         $scope.started = true;
+
+        $scope.beginCount();
     };
 
     /**
@@ -72,6 +78,8 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
      */
     $scope.endOnion = function() {
         $scope.initOnion();
+
+        $scope.beginCountdown();
     };
 
     /**
@@ -81,6 +89,30 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
      */
     $scope.completeOnion = function() {
         $scope.initOnion();
+
+        $scope.beginCountdown();
+    };
+
+    /**
+     * begin count
+     *
+     * @return void
+     */
+    $scope.beginCount = function() {
+        $scope.showCountClock = true;
+        $scope.showCountdownClock = false;
+        $scope.$broadcast('timer-start');
+    };
+
+    /**
+     * begin count down
+     *
+     * @return void
+     */
+    $scope.beginCountdown = function() {
+        $scope.showCountClock = false;
+        $scope.showCountdownClock = true;
+        $scope.$broadcast('timer-set-countdown-seconds', 300);
     };
 
     // init onion

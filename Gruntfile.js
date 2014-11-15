@@ -21,7 +21,8 @@ var configureGrunt = function(grunt) {
                 files: [
                     {expand: true, cwd: 'bower_components/angular/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'},
                     {expand: true, cwd: 'bower_components/angular-route/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'},
-                    {expand: true, cwd: 'bower_components/angular-resource/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'}
+                    {expand: true, cwd: 'bower_components/angular-resource/', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'},
+                    {expand: true, cwd: 'bower_components/angular-timer/dist', src: '*.js', dest: 'public/javascripts/lib/', filter: 'isFile'}
                 ]
             },
             moment: {

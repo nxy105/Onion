@@ -23,7 +23,9 @@
         </div>
         <div class="col-md-4">
             <h2 class="text-center onion-timer">
-                <hour>00</hour>:<minute>00</minute>:<second>00</second>
+                <timer autostart="false" interval="1000" ng-hide="!showCountClock">{{mminutes}}:{{sseconds}}</timer>
+                <timer autostart="false" interval="1000" countdown="300" ng-hide="!showCountdownClock">{{mminutes}}:{{sseconds}}</timer>
+                <!-- <hour>00</hour>:<minute>00</minute>:<second>00</second> -->
             </h2>
             <div class="onion-area-btns">
                 <button type="button" class="btn btn-primary btn-lg btn-block" ng-disabled="!selectedPotatoId" ng-hide="started" ng-click="startOnion()">开始一个洋葱</button>

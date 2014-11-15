@@ -4,6 +4,7 @@
 
 var onionApp = angular.module('onionApp', [
     'ngRoute',
+    'timer',
 
     'ResponseHandler',
     'ResponseErrorHandler',
