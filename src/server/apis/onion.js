@@ -58,13 +58,20 @@ var onionApi = {
         }
 
         return potatoModel.get(potatoId).then(function(potato) {
-            return next(potato.potatoId);
-        }).then(function(potatoId) {
-            return onionModel.create({
-                'potatoId': potatoId,
+            return next(potato);
+        }).then(function(potato) {
+            var onion = {
+                'potatoId': potato.potatoId,
                 'createdById': req.session.userId,
                 'createdOn': moment(createdOn).format('YYYY-MM-DD HH:mm:ss'),
                 'completedOn': completedOn,
+            }
+
+            // create onion
+            return onionModel.create(onion).then(function(onion) {
+                // assemble potato
+                onion.potato = potato;
+                return next(onion);
             });
         });
     },

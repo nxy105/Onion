@@ -63,14 +63,7 @@ var potatoApi = {
             return error(10002, 'Update a potato require a valid potato id');
         }
 
-        if (!checkTitle(title)) {
-            return error(10003, 'Potato title must be required and length must less then 100');
-        }
-
-        if (!checkStatus(status, [potatoModel.STATUS.COMPLETE])) {
-            return error(10004, 'Potato status must be required and must be complete');
-        }
-
+        // find a potato first
         return potatoModel.get(potatoId).then(function(potato) {
             // can not find the potato
             if (!potato) {
@@ -83,11 +76,23 @@ var potatoApi = {
                 return error(10006, 'You are not this potato\'s created person');
             }
 
-            // when get a potato to do this
-            updatingData = {
-                'title': title,
-                'status': status
-            };
+            updatingData = {};
+
+            if (validator.isRequired(title)) {
+                if (!checkTitle(title)) {
+                    return error(10003, 'Potato title must be required and length must less then 100');
+                } else {
+                    updatingData.title = title;
+                }
+            }
+
+            if (validator.isRequired(status)) {
+                if (!checkStatus(status, [potatoModel.STATUS.COMPLETE])) {
+                    return error(10004, 'Potato status must be required and must be complete');
+                } else {
+                    updatingData.status = status;
+                }
+            }
 
             // update potato and return a promise object
             return potatoModel.update(potatoId, updatingData);

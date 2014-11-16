@@ -18,6 +18,21 @@ OnionServices.factory('Onion', ['$http', 'ResponseHandler', 'ResponseErrorHandle
             }).error(function(res, status, headers, config) {
                 ResponseErrorHandler(res, status);
             });
+        },
+
+        /**
+         * create
+         *
+         * @param  object   newOnion
+         * @param  function done
+         * @return void
+         */
+        'create': function(newOnion, done) {
+            $http.post('/onion', newOnion).success(function(res, status, headers, config) {
+                ResponseHandler(res, done);
+            }).error(function(res, status, headers, config) {
+                ResponseErrorHandler(res, status);
+            });
         }
     };
 }]);

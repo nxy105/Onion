@@ -10,7 +10,7 @@
     <div class="row" ng-init="selectedPotatoId = 0">
         <div class="col-md-4">
             <div class="well">
-                <h4 ng-repeat-start="group in onionGroups">{{group.date}}</h4>
+                <h4 ng-repeat-start="group in onionGroups">{{formatDate(group.date)}}</h4>
                 <div class="list-group" ng-repeat-end>
                     <div class="list-group-item" ng-repeat="onion in group.onions">
                         <h5 class="list-group-item-heading">{{onion.potato.title}}</h5>
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <h2 class="text-center onion-timer">
+            <h2 class="text-center onion-timer" ng-init="showCountClock = true; showCountdownClock = false">
                 <timer autostart="false" interval="1000" ng-hide="!showCountClock">{{mminutes}}:{{sseconds}}</timer>
                 <timer autostart="false" interval="1000" countdown="300" ng-hide="!showCountdownClock">{{mminutes}}:{{sseconds}}</timer>
                 <!-- <hour>00</hour>:<minute>00</minute>:<second>00</second> -->

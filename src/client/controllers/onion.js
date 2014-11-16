@@ -3,61 +3,13 @@
 var OnionControllers = angular.module('OnionControllers', []);
 
 OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion', function($scope, Potato, Onion) {
-    window.MY_SCOPE = $scope;
-
-    // list potatos
-    Potato.listAll(function(potatos) {
-        $scope.potatos = potatos;
-    });
-
-    // list onions
-    Onion.listAll(function(onions) {
-        var onionGroups = []
-          , today = moment()
-          , yesterday = moment().subtract(1, 'days')
-          , createdOn, formattedDate, onion
-          , currentGroupNum = -1;
-
-        for (var i = 0; i < onions.length; i ++) {
-            onion = onions[i];
-            createdOn = moment(onion.createdOn);
-
-            if (createdOn.isSame(today, 'day')) {
-                formattedDate = '今天';
-            } else if (createdOn.isSame(yesterday, 'day')) {
-                formattedDate = '昨天';
-            } else {
-                formattedDate = createdOn.format('MM月DD日');
-            }
-
-            onion.createdOnTime = moment(onion.createdOn).format('HH:mm');
-            onion.completedOnTime = moment(onion.completedOn).format('HH:mm');
-
-            if (onionGroups[currentGroupNum] && onionGroups[currentGroupNum].date === formattedDate) {
-                onionGroups[currentGroupNum].onions.push(onion);
-            } else {
-                currentGroupNum ++;
-                onionGroups[currentGroupNum] = {
-                    date: formattedDate,
-                    onions: [onion]
-                };
-            }
-        }
-
-        $scope.onionGroups = onionGroups;
-    });
-
     /**
      * init
      *
      * @return void
      */
-    $scope.initOnion = function() {
+    $scope.initOnionClock = function() {
         $scope.started = false;
-
-        // show count clock
-        $scope.showCountClock = true;
-        $scope.showCountdownClock = false;
     };
 
     /**
@@ -67,8 +19,8 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
      */
     $scope.startOnion = function() {
         $scope.started = true;
-
         $scope.beginCount();
+        $scope.onionStartOn = new Date();
     };
 
     /**
@@ -77,8 +29,12 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
      * @return void
      */
     $scope.endOnion = function() {
-        $scope.initOnion();
+        // create a onion
+        Onion.create($scope.getNewOnion(), function(onion) {
+            createOnionForOnionGroup(onion);
+        });
 
+        $scope.initOnionClock();
         $scope.beginCountdown();
     };
 
@@ -88,9 +44,30 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
      * @return void
      */
     $scope.completeOnion = function() {
-        $scope.initOnion();
+        // create a onion
+        Onion.create($scope.getNewOnion(), function(onion) {
+            createOnionForOnionGroup(onion);
+        });
 
+        Potato.update($scope.selectedPotatoId, {status: 'complete'}, function(potato) {
+            removePotato(potato);
+        });
+
+        $scope.initOnionClock();
         $scope.beginCountdown();
+    };
+
+    /**
+     * getNewOnion
+     *
+     * @return object
+     */
+    $scope.getNewOnion = function() {
+        return {
+            createdOn: moment($scope.onionStartOn).format('YYYY-MM-DD HH:mm:ss'),
+            completedOn: moment().format('YYYY-MM-DD HH:mm:ss'),
+            potatoId: $scope.selectedPotatoId
+        };
     };
 
     /**
@@ -114,9 +91,6 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
         $scope.showCountdownClock = true;
         $scope.$broadcast('timer-set-countdown-seconds', 300);
     };
-
-    // init onion
-    $scope.initOnion();
 
     /**
      * register pick on potato
@@ -146,19 +120,102 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
      * @return void
      */
     $scope.removePotato = function($event, potato) {
-        var potatoId = potato.potatoId;
-        Potato.remove(potatoId, function() {
-            $scope.potatos = $.grep($scope.potatos, function(potato) {
-                return potato.potatoId !== potatoId;
-            });
-
-            if ($scope.selectedPotatoId === potatoId) {
-                $scope.selectedPotatoId = 0;
-            }
+        Potato.remove(potato.potatoId, function() {
+            removePotato(potato);
         });
 
         // stop event
         return $event.stopPropagation();
+    };
+
+    /**
+     * removePotato
+     *
+     * @param  object potato  potato object
+     * @return void
+     */
+    var removePotato = function(potato) {
+        $scope.potatos = $.grep($scope.potatos, function(item) {
+            return potato.potatoId !== item.potatoId;
+        });
+
+        if ($scope.selectedPotatoId === potato.potatoId) {
+            $scope.selectedPotatoId = 0;
+        }
+    };
+
+    /**
+     * initOnionList
+     *
+     * @param  array onions onion list
+     * @return void
+     */
+    var initOnionList = function(onions) {
+        var onionGroups = []
+          , currentGroupNum = -1
+          , date, onion;
+
+        for (var i = 0; i < onions.length; i ++) {
+            onion = onions[i];
+            onion.createdOnTime = moment(onion.createdOn).format('HH:mm');
+            onion.completedOnTime = moment(onion.completedOn).format('HH:mm');
+
+            date = moment(onion.createdOn).format('YYYY-MM-DD');
+
+            if (onionGroups[currentGroupNum] && onionGroups[currentGroupNum].date === date) {
+                onionGroups[currentGroupNum].onions.push(onion);
+            } else {
+                currentGroupNum ++;
+                onionGroups[currentGroupNum] = {
+                    date: date,
+                    onions: [onion]
+                };
+            }
+        }
+
+        $scope.onionGroups = onionGroups;
+    };
+
+    /**
+     * createOnionForOnionGroup
+     *
+     * @param  object onion  onion object
+     * @return void
+     */
+    var createOnionForOnionGroup = function(onion) {
+        var onionGroups = $scope.onionGroups
+          , createdOn = moment(onion.createdOn).format('YYYY-MM-DD');
+
+        onion.createdOnTime = moment(onion.createdOn).format('HH:mm');
+        onion.completedOnTime = moment(onion.completedOn).format('HH:mm');
+
+        if (onionGroups[0] && onionGroups[0].date === createdOn) {
+            onionGroups[0].onions.unshift(onion);
+        } else {
+            onionGroups[0] = {
+                date: createdOn,
+                onions: [onion]
+            }
+        }
+    };
+
+    /**
+     * formatDate
+     *
+     * @param  string date  date string
+     * @return string
+     */
+    $scope.formatDate = function(date) {
+        var today = moment().format('YYYY-MM-DD')
+          , yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+
+        if (date === today) {
+            return '今天';
+        } else if (date === yesterday) {
+            return '昨天';
+        } else {
+            return moment(date).format('MM月DD日');
+        }
     };
 
     /**
@@ -179,4 +236,18 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
         // clean potato form
         $scope.newPotato = {};
     };
+
+    $scope.initOnionClock();
+
+    // list potatos
+    Potato.listAll(function(potatos) {
+        $scope.potatos = potatos;
+    });
+
+    // list onions
+    Onion.listAll(function(onions) {
+         initOnionList(onions);
+    });
+
+    window.MY_SCOPE = $scope;
 }]);

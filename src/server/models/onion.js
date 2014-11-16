@@ -30,7 +30,7 @@ var onionModel = {
         };
 
         options = {
-            'limit': 20,
+            'limit': 15,
             'sort': [['completedOn', 'desc'], ['onionId', 'desc']]
         };
 
