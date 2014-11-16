@@ -1,10 +1,11 @@
 /**
  * DB
  */
-var MongoClient = require('mongodb').MongoClient
-  , when = require('when');
+var mongoClient = require('mongodb').MongoClient
+  , when = require('when')
+  , config = require('../../config');
 
-var dsn = 'mongodb://localhost:27017/test';
+var dsn = config.db.protocol + '://' + config.db.host + ':' + config.db.port + '/' + config.db.name;
 var db = {
 
     /**
@@ -35,7 +36,7 @@ var db = {
      */
     connect: function() {
         return when.promise(function(resolve, reject) {
-            MongoClient.connect(dsn, function(err, db) {
+            mongoClient.connect(dsn, function(err, db) {
                 return err ? reject(err) : resolve(db);
             });
         });

@@ -18,7 +18,7 @@ var userModel = {
     getByUsernameAndPassword: function(username, password) {
         return when.promise(function(resolve, reject) {
             if (username == 'joshua' && password == '123qaz') {
-                return resolve({ 'username': username, 'userId': 1 });
+                return resolve({ username: username, userId: 1 });
             } else {
                 return resolve(null);
             }

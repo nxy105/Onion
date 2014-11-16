@@ -37,10 +37,10 @@ var potatoApi = {
         }
 
         return potatoModel.create({
-            'title': title,
-            'createdById': req.session.userId,
-            'createdOn': moment().format('YYYY-MM-DD HH:mm:ss'),
-            'status': potatoModel.STATUS.NORMAL
+            title: title,
+            createdById: req.session.userId,
+            createdOn: moment().format('YYYY-MM-DD HH:mm:ss'),
+            status: potatoModel.STATUS.NORMAL
         });
     },
 

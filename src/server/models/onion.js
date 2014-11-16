@@ -30,8 +30,8 @@ var onionModel = {
         };
 
         options = {
-            'limit': 15,
-            'sort': [['completedOn', 'desc'], ['onionId', 'desc']]
+            limit: 15,
+            sort: [['completedOn', 'desc'], ['onionId', 'desc']]
         };
 
         return db.find('onions', conditions, {}, options);

@@ -7,8 +7,8 @@ var db = require('../db');
 var potatoModel = {
 
     STATUS: {
-        'NORMAL': 'normal',
-        'COMPLETE': 'complete'
+        NORMAL: 'normal',
+        COMPLETE: 'complete'
     },
 
     /**
@@ -18,7 +18,7 @@ var potatoModel = {
      * @return promise
      */
     get: function(potatoId) {
-        return db.findOne('potatos', { 'potatoId': potatoId });
+        return db.findOne('potatos', { potatoId: potatoId });
     },
 
     /**
@@ -39,7 +39,7 @@ var potatoModel = {
      * @return promise
      */
     update: function(potatoId, data) {
-        return db.update('potatos', { 'potatoId': potatoId }, data);
+        return db.update('potatos', { potatoId: potatoId }, data);
     },
 
     /**
@@ -52,13 +52,13 @@ var potatoModel = {
         var options, conditions;
 
         conditions = {
-            'createdById': createdById,
-            'status': this.STATUS.NORMAL
+            createdById: createdById,
+            status: this.STATUS.NORMAL
         };
 
         options = {
-            'limit': 20,
-            'sort': [['createdOn', 'desc'], ['potatoId', 'desc']]
+            limit: 20,
+            sort: [['createdOn', 'desc'], ['potatoId', 'desc']]
         };
 
         return db.find('potatos', conditions, {}, options);
@@ -72,8 +72,8 @@ var potatoModel = {
      */
     listByPotatoIds: function(potatoIds) {
         var conditions = {
-            'potatoId': {
-                '$in': potatoIds
+            potatoId: {
+                $in: potatoIds
             }
         };
 
@@ -87,7 +87,7 @@ var potatoModel = {
      * @return promise
      */
     remove: function(potatoId) {
-        return db.remove('potatos', { 'potatoId': potatoId });
+        return db.remove('potatos', { potatoId: potatoId });
     },
 };
 
