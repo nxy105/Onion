@@ -2,7 +2,7 @@
  * Model user.
  */
 
-var db = require('../db')
+var config = require('../../../config')
   , when = require('when');
 
 var userModel = {
@@ -13,14 +13,43 @@ var userModel = {
      *
      * @param  string username
      * @param  string password
-     * @return object
+     * @return promise
      */
     getByUsernameAndPassword: function(username, password) {
         return when.promise(function(resolve, reject) {
-            if (username == 'joshua' && password == '123qaz') {
-                return resolve({ username: username, userId: 1 });
-            } else {
-                return resolve(null);
+            var users, user;
+
+            users = config.users;
+            for (var i = 0; i < users.length; i ++) {
+                user = users[i];
+                if (username === user.username && password === user.password) {
+                    return resolve(user);
+                } else {
+                    return resolve(false);
+                }
+            }
+        });
+    },
+
+     /**
+     * get by user id
+     * TODO here will be modified with query db
+     *
+     * @param  integer  userId user id
+     * @return promise
+     */
+    get: function(userId) {
+        return when.promise(function(resolve, reject) {
+            var users, user;
+
+            users = config.users;
+            for (var i = 0; i < users.length; i ++) {
+                user = users[i];
+                if (userId === user.userId) {
+                    return resolve(user);
+                } else {
+                    return resolve(false);
+                }
             }
         });
     },
