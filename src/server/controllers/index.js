@@ -35,7 +35,7 @@ indexController = {
                 },
             };
 
-            return res.render('index/index', {stream : JSON.stringify(stream)});
+            return res.render('app/index', {stream : JSON.stringify(stream)});
         });
     }
 };

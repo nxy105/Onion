@@ -3,7 +3,8 @@
  */
 var moment = require('moment')
   , potatoModel = require('../models/potato')
-  , validator = require('../../../lib/validator');
+  , validator = require('../../../lib/validator')
+  , session = require('../session');
 
 var potatoApi = {
 
@@ -16,9 +17,11 @@ var potatoApi = {
      * @return promise
      */
     list: function(req, res, error) {
-        var createdById = req.session.userId;
+        if (!session.checkUserLogin(req)) {
+            return error(100, 'Not login yet');
+        }
 
-        return potatoModel.listForNormal(createdById);
+        return potatoModel.listForNormal(session.getLoginnedUserId(req));
     },
 
     /**
@@ -30,7 +33,14 @@ var potatoApi = {
      * @return promise
      */
     create: function(req, res, error) {
-        var title = validator.toString(req.param('title'));
+        var title, createdById;
+
+        if (!session.checkUserLogin(req)) {
+            return error(100, 'Not login yet');
+        }
+
+        createdById = session.getLoginnedUserId(req);
+        title = validator.toString(req.param('title'));
 
         if (!checkTitle(title)) {
             return error(10001, 'Potato title must be required and length must less then 100');
@@ -38,7 +48,7 @@ var potatoApi = {
 
         return potatoModel.create({
             title: title,
-            createdById: req.session.userId,
+            createdById: createdById,
             createdOn: moment().format('YYYY-MM-DD HH:mm:ss'),
             status: potatoModel.STATUS.NORMAL
         });
@@ -55,6 +65,11 @@ var potatoApi = {
     update: function(req, res, error) {
         var potatoId, title, createdById, createdOn, status, updatingData;
 
+        if (!session.checkUserLogin(req)) {
+            return error(100, 'Not login yet');
+        }
+
+        createdById = session.getLoginnedUserId(req);
         potatoId = validator.toInt(req.param('potatoId'));
         title = validator.toString(req.param('title'));
         status = validator.toString(req.param('status'));
@@ -71,7 +86,6 @@ var potatoApi = {
             }
 
             // do not allowed the other person to operate potato
-            createdById = req.session.userId;
             if (potato.createdById !== createdById) {
                 return error(10006, 'You are not this potato\'s created person');
             }
@@ -111,7 +125,14 @@ var potatoApi = {
      * @return promise
      */
     remove: function(req, res, error, next) {
-        var potatoId = validator.toInt(req.param('potatoId'));
+        var potatoId, createdById;
+
+        if (!session.checkUserLogin(req)) {
+            return error(100, 'Not login yet');
+        }
+
+        createdById = session.getLoginnedUserId(req);
+        potatoId = validator.toInt(req.param('potatoId'));
 
         if (potatoId === 0) {
             return error(10005, 'Remove a potato require a valid potato id');
@@ -124,7 +145,6 @@ var potatoApi = {
             }
 
             // do not allowed the other person to operate potato
-            createdById = req.session.userId;
             if (potato.createdById !== createdById) {
                 return error(10006, 'You are not this potato\'s created person');
             }

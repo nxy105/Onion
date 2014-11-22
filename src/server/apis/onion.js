@@ -5,7 +5,8 @@ var moment = require('moment')
   , onionModel = require('../models/onion')
   , potatoModel = require('../models/potato')
   , validator = require('../../../lib/validator')
-  , util = require('../../../lib/util');
+  , util = require('../../../lib/util')
+  , session = require('../session');
 
 var onionApi = {
 
@@ -21,7 +22,11 @@ var onionApi = {
     list: function(req, res, error, next) {
         var createdById, potatoIds;
 
-        createdById = req.session.userId;
+        if (!session.checkUserLogin(req)) {
+            return error(100, 'Not login yet');
+        }
+
+        createdById = session.getLoginnedUserId(req);
 
         return onionModel.list(createdById).then(function(onions) {
             potatoIds = util.getCol(onions, 'potatoId');
@@ -45,6 +50,11 @@ var onionApi = {
     create: function(req, res, error, next) {
         var createdById, createdOn, completedOn, potatoId;
 
+        if (!session.checkUserLogin(req)) {
+            return error(100, 'Not login yet');
+        }
+
+        createdById = session.getLoginnedUserId(req);
         potatoId = validator.toInt(req.param('potatoId'));
         createdOn = validator.toString(req.param('createdOn'));
         completedOn = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -62,7 +72,7 @@ var onionApi = {
         }).then(function(potato) {
             var onion = {
                 potatoId: potato.potatoId,
-                createdById: req.session.userId,
+                createdById: createdById,
                 createdOn: moment(createdOn).format('YYYY-MM-DD HH:mm:ss'),
                 completedOn: completedOn,
             }
