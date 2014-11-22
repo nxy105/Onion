@@ -3,6 +3,9 @@
 var OnionControllers = angular.module('OnionControllers', []);
 
 OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion', function($scope, Potato, Onion) {
+
+    $scope.user = onion.user;
+
     /**
      * init
      *

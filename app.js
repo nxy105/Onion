@@ -36,9 +36,10 @@ app.use(express.static(__dirname + '/public'));
 
 // parse request bodies (req.body)
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // load session
-app.use(require('./src/server/session'));
+require('./src/server/session');
 
 // load routes
 app.use('/', require('./src/server/router'));

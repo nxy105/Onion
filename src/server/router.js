@@ -7,15 +7,18 @@ var express = require('express')
   , api = require('../../lib/api');
 
 // load controllers
-var index = require('./controllers/index');
+var index = require('./controllers/index')
+  , user = require('./controllers/user');
 
 // load apis
-var potato = require('./apis/potato');
-var onion = require('./apis/onion');
-var user = require('./apis/user');
+var potato = require('./apis/potato')
+  , onion = require('./apis/onion');
 
 // add controller routes
 router.get('/', index.index);
+router.get('/login', user.login);
+router.post('/login', user.processLogin);
+router.get('/logout', user.logout);
 
 // add api routes
 router.get('/potato/', api.exec(potato.list));
@@ -25,8 +28,5 @@ router.delete('/potato/:potatoId', api.exec(potato.remove));
 
 router.get('/onion/', api.exec(onion.list));
 router.post('/onion', api.exec(onion.create));
-
-router.post('/user/login', api.exec(user.login));
-router.post('/user/logout', api.exec(user.logout));
 
 module.exports = router;

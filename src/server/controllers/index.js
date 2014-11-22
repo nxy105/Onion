@@ -1,17 +1,43 @@
 /**
  * Controller index.
  */
-var onion = require('../models/onion')
-  , controller = {};
+var session = require('../session')
+  , userModel = require('../models/user')
+  , indexController;
 
-/**
- * index action
- */
-controller.index = function(req, res) {
+indexController = {
 
-    var userId = req.session.userId;
+    /**
+     * index action
+     *
+     * @param  object req  request object
+     * @param  object res  response object
+     * @return void
+     */
+    index: function(req, res) {
+        var userId, stream;
 
-    res.render('index/index', {stream : JSON.stringify({ userId: userId })});
+        // if user is not loginned
+        if (!session.checkUserLogin(req)) {
+            return res.redirect('/login');
+        }
+
+        userId = session.getLoginnedUserId(req);
+        return userModel.get(userId).then(function(user) {
+            if (!user) {
+                return res.redirect('/login');
+            }
+
+            stream = {
+                user: {
+                    userId: user.userId,
+                    username: user.username
+                },
+            };
+
+            return res.render('index/index', {stream : JSON.stringify(stream)});
+        });
+    }
 };
 
-module.exports = controller;
+module.exports = indexController;
