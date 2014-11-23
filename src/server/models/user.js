@@ -24,10 +24,10 @@ var userModel = {
                 user = users[i];
                 if (username === user.username && password === user.password) {
                     return resolve(user);
-                } else {
-                    return resolve(false);
                 }
             }
+
+            return resolve(false);
         });
     },
 
@@ -47,10 +47,10 @@ var userModel = {
                 user = users[i];
                 if (userId === user.userId) {
                     return resolve(user);
-                } else {
-                    return resolve(false);
                 }
             }
+
+            return resolve(false);
         });
     },
 };
