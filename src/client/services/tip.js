@@ -10,7 +10,7 @@ TipServices.factory('Tip', [function() {
     tipMap = {
         default: '选择一个土豆, 开始一段洋葱之旅',
         addPotato: '快去我的右侧, 添加一个土豆吧',
-        haveARest: '完成了一个土豆, 休息一会, 喝个咖啡换个心情',
+        haveARest: '完成了一个土豆, 休息一会, 喝个咖啡换个心情 :)',
         startAOnion: '开始了新的洋葱, 争取尽快完成它吧'
     };
 

@@ -12,6 +12,8 @@ describe('API Test', function() {
         var agent = superagent.agent()
           , potatoId;
 
+        before(loginUser(agent));
+
         // test potato create
         it('potato.create', function(done) {
             agent
@@ -125,3 +127,16 @@ describe('API Test', function() {
         });
     });
 });
+
+function loginUser(agent) {
+    return function(done) {
+        agent
+            .post(domain + '/login')
+            .send({ username: 'test', password: '1' })
+            .end(onResponse);
+
+        function onResponse(err, res) {
+            return done();
+        }
+    };
+}

@@ -10,7 +10,9 @@ var domain = 'http://127.0.0.1:3000';
 describe('API Test', function() {
     describe('Onion Module', function() {
         var agent = superagent.agent()
-          , onionId, potatoId;
+          , onionId, potatoId, cookie;
+
+        before(loginUser(agent));
 
         // test potato create
         it('onion.createPotato', function(done) {
@@ -101,3 +103,16 @@ describe('API Test', function() {
         });
     });
 });
+
+function loginUser(agent) {
+    return function(done) {
+        agent
+            .post(domain + '/login')
+            .send({ username: 'test', password: '1' })
+            .end(onResponse);
+
+        function onResponse(err, res) {
+            return done();
+        }
+    };
+}
