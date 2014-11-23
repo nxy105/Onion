@@ -14,6 +14,7 @@ config = {
         },
         session: {
             secret: 'test',
+            maxAge: 3600000
         },
         users: [
             {
@@ -33,6 +34,7 @@ config = {
         },
         session: {
             secret: 'no way to see',
+            maxAge: 3600000
         },
         users: [
             {

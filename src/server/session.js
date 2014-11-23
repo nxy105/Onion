@@ -10,7 +10,7 @@ var app = require('../../app')
 app.use(session({
     resave: true,
     secret: config.session.secret,
-    cookie: { maxAge: 60000 },
+    cookie: { maxAge: config.session.maxAge },
     saveUninitialized: true
 }));
 
