@@ -13,7 +13,7 @@ PotatoServices.factory('Potato', ['$http', 'ResponseHandler', 'ResponseErrorHand
          * @param  function done
          * @return void
          */
-        'create': function(newPotato, done) {
+        create: function(newPotato, done) {
             $http.post('/potato', newPotato).success(function(res, status, headers, config) {
                 ResponseHandler(res, done);
             }).error(function(res, status, headers, config) {
@@ -28,7 +28,7 @@ PotatoServices.factory('Potato', ['$http', 'ResponseHandler', 'ResponseErrorHand
          * @param  function done
          * @return void
          */
-        'update': function(potatoId, potato, done) {
+        update: function(potatoId, potato, done) {
             $http.put('/potato/' + potatoId, potato).success(function(res, status, headers, config) {
                 ResponseHandler(res, done);
             }).error(function(res, status, headers, config) {
@@ -42,7 +42,7 @@ PotatoServices.factory('Potato', ['$http', 'ResponseHandler', 'ResponseErrorHand
          * @param  function done
          * @return void
          */
-        'listAll': function(done) {
+        listAll: function(done) {
             $http.get('/potato/').success(function(res, status, headers, config) {
                 ResponseHandler(res, done);
             }).error(function(res, status, headers, config) {
@@ -57,7 +57,7 @@ PotatoServices.factory('Potato', ['$http', 'ResponseHandler', 'ResponseErrorHand
          * @param  function done
          * @return void
          */
-        'remove': function(potatoId, done) {
+        remove: function(potatoId, done) {
             $http.delete('/potato/' + potatoId).success(function(res, status, headers, config) {
                 ResponseHandler(res, done);
             }).error(function(res, status, headers, config) {

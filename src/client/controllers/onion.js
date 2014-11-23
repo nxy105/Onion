@@ -2,7 +2,7 @@
 
 var OnionControllers = angular.module('OnionControllers', []);
 
-OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion', function($scope, Potato, Onion) {
+OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion', 'Tip', function($scope, Potato, Onion, Tip) {
 
     $scope.user = onion.user;
 
@@ -24,6 +24,8 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
         $scope.started = true;
         $scope.beginCount();
         $scope.onionStartOn = new Date();
+
+        Tip.set($scope, 'startAOnion');
     };
 
     /**
@@ -39,6 +41,8 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
 
         $scope.initOnionClock();
         $scope.beginCountdown();
+
+        Tip.set($scope, 'haveARest');
     };
 
     /**
@@ -58,6 +62,8 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
 
         $scope.initOnionClock();
         $scope.beginCountdown();
+
+        Tip.set($scope, 'haveARest');
     };
 
     /**
@@ -245,12 +251,18 @@ OnionControllers.controller('OnionIndexController', ['$scope', 'Potato', 'Onion'
     // list potatos
     Potato.listAll(function(potatos) {
         $scope.potatos = potatos;
+
+        if (!potatos || potatos.length === 0) {
+            Tip.set($scope, 'addPotato');
+        }
     });
 
     // list onions
     Onion.listAll(function(onions) {
          initOnionList(onions);
     });
+
+    Tip.set($scope, 'default');
 
     window.MY_SCOPE = $scope;
 }]);

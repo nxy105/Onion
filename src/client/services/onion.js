@@ -12,7 +12,7 @@ OnionServices.factory('Onion', ['$http', 'ResponseHandler', 'ResponseErrorHandle
          * @param  function done
          * @return void
          */
-        'listAll': function(done) {
+        listAll: function(done) {
             $http.get('/onion/').success(function(res, status, headers, config) {
                 ResponseHandler(res, done);
             }).error(function(res, status, headers, config) {
@@ -27,7 +27,7 @@ OnionServices.factory('Onion', ['$http', 'ResponseHandler', 'ResponseErrorHandle
          * @param  function done
          * @return void
          */
-        'create': function(newOnion, done) {
+        create: function(newOnion, done) {
             $http.post('/onion', newOnion).success(function(res, status, headers, config) {
                 ResponseHandler(res, done);
             }).error(function(res, status, headers, config) {

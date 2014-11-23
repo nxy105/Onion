@@ -11,7 +11,8 @@ var onionApp = angular.module('onionApp', [
 
     'OnionControllers',
     'OnionServices',
-    'PotatoServices'
+    'PotatoServices',
+    'TipServices'
 ]);
 
 // set router
