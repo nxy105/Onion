@@ -2,7 +2,7 @@
   "name": "Onion",
   "version": "0.0.0",
   "description": "a todo list and time manager",
-  "main": "index.js",
+  "main": "app.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/nxy105/Onion.git"
@@ -15,7 +15,7 @@
     "Onion"
   ],
   "author": "nienieservice@163.com",
-  "license": "BSD-2-Clause",
+  "license": "Mit",
   "bugs": {
     "url": "https://github.com/nxy105/Onion/issues"
   },
