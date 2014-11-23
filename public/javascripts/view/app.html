@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="header">
+        <ul class="nav pull-right">
+            <li>
+                <a href="/logout">{{user.username}}</a>
+            </li>
+        </ul>
+        <h3 class="text-muted"><strong>洋葱土豆</strong> <small>管理自己的时间</small></h3>
+    </div>
+    <div class="row" ng-init="selectedPotatoId = 0">
+        <div class="col-md-4">
+            <div class="well">
+                <h4 ng-repeat-start="group in onionGroups">{{formatDate(group.date)}}</h4>
+                <div class="list-group" ng-repeat-end>
+                    <div class="list-group-item" ng-repeat="onion in group.onions">
+                        <h5 class="list-group-item-heading">{{onion.potato.title}}</h5>
+                        <p class="list-group-item-text">
+                            <span class="onion-date">{{onion.createdOnTime}}</span> - <span class="onion-date">{{onion.completedOnTime}}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center onion-timer" ng-init="showCountClock = true; showCountdownClock = false">
+                <timer autostart="false" interval="1000" ng-hide="!showCountClock">{{mminutes}}:{{sseconds}}</timer>
+                <timer autostart="false" interval="1000" countdown="300" ng-hide="!showCountdownClock">{{mminutes}}:{{sseconds}}</timer>
+                <!-- <hour>00</hour>:<minute>00</minute>:<second>00</second> -->
+            </h2>
+            <div class="onion-area-btns">
+                <button type="button" class="btn btn-primary btn-lg btn-block" ng-disabled="!selectedPotatoId" ng-hide="started" ng-click="startOnion()">开始一个洋葱</button>
+                <button type="button" class="btn btn-default btn-lg btn-block" ng-hide="!started" ng-click="completeOnion()">完成这个洋葱</button>
+                <button type="button" class="btn onion-btn-pause btn-lg btn-block" ng-hide="!started" ng-click="endOnion()">中断这个洋葱</button>
+            </div>
+            <div class="onion-callout onion-callout-tips">
+                <h4>小贴士</h4>
+                <span>{{tip}}</span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="well">
+                <form ng-submit="createPotato(newPotato)" ng-init="newPotato = {}" class="form-group input-group">
+                    <input type="text" class="form-control" placeholder="添加土豆" ng-model="newPotato.title">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="createPotato(newPotato)">↵</button>
+                    </span>
+                </form>
+                <div class="list-group">
+                    <a href="javascript:void(0);" ng-class="{active: potato.selected}" class="list-group-item" ng-repeat="potato in potatos" ng-mouseenter="potato.hideRemoveButton = false" ng-mouseleave="potato.hideRemoveButton = true" ng-click="selectPotato(potato)">
+                        {{potato.title}}
+                        <span class="glyphicon glyphicon-minus pull-right" ng-init="potato.hideRemoveButton = true" ng-hide="potato.hideRemoveButton" ng-click="removePotato($event, potato)"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
