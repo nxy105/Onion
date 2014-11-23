@@ -3,10 +3,16 @@
  */
 var mongoClient = require('mongodb').MongoClient
   , when = require('when')
-  , config = require('../../config');
+  , config = require('../../config')
+  , dsn, db;
 
-var dsn = config.db.protocol + '://' + config.db.host + ':' + config.db.port + '/' + config.db.name;
-var db = {
+dsn = config.db.protocol + '://';
+if (config.db.username && config.db.password) {
+    dsn = dsn + config.db.username + ':' + config.db.password + '@';
+}
+dsn = dsn + config.db.host + ':' + config.db.port + '/' + config.db.name;
+
+db = {
 
     /**
      * getNextSequence

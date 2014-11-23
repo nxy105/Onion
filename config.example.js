@@ -1,5 +1,5 @@
 /**
- * Config example file
+ * Config file
  */
 
 var config, env;
@@ -11,7 +11,17 @@ config = {
             host: '127.0.0.1',
             port: '27017',
             name: 'test'
-        }
+        },
+        session: {
+            secret: 'test',
+        },
+        users: [
+            {
+                userId: 1,
+                username: 'test',
+                password: '1',
+            }
+        ]
     },
 
     production: {
@@ -20,7 +30,17 @@ config = {
             host: '127.0.0.1',
             port: '27017',
             name: 'onion'
-        }
+        },
+        session: {
+            secret: 'no way to see',
+        },
+        users: [
+            {
+                userId: 1,
+                username: 'test',
+                password: '1',
+            }
+        ]
     }
 };
 
